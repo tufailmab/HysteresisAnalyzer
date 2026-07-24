@@ -1,4 +1,4 @@
-# A script i developed to get energy descipation per cycle.
+# A script i developed to get energy dissipation per cycle.
 # A one click process for no matter how many cycles you have to process
 # WhatsApp: Https://wa.me/+923440907874 or +923440907874
 
@@ -6,7 +6,7 @@ import os
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-from scipy.integrate import trapz
+from scipy.integrate import trapezoid  # Changed from trapz to trapezoid
 
 # Load the Excel file
 file_name = "GlobalResponse_FDCurve.xlsx"
@@ -42,7 +42,7 @@ for i, (start, end) in enumerate(cycle_indices):
     cycle_df.to_csv(f"{output_dir}/cycle_{i+1}.csv", index=False)
     
     # Calculate the area enclosed by the cycle (Energy Dissipation)
-    area = abs(trapz(cycle_df.iloc[:, 1], cycle_df.iloc[:, 0]))
+    area = abs(trapezoid(cycle_df.iloc[:, 1], cycle_df.iloc[:, 0]))  # Changed from trapz to trapezoid
     with open(f"{area_dir}/cycle_{i+1}_area.txt", "w") as f:
         f.write(f"Energy Dissipation (Area) for Cycle {i+1}: {area:.2f} kN.mm\n")
     
